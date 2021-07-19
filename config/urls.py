@@ -20,4 +20,7 @@ from app1 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('app1/', include('app1.urls')),
+    path('common/', include('common.urls')),
 ]
+
+
