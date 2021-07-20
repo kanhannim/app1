@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+# 메인 인덱스는 아무것도 안딸려 있는게 깔끔/ ~='/app1' <-- ~ = '/'
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/'
