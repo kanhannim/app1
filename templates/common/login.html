@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container my-3">
+     <div class="row my-3">
+        <div class="col-4">
+            <h4>로그인</h4>
+        </div>
+        <div class="col-8 text-right">
+            <span>또는 <a href="{% url 'common:signup' %}">회원가입</a></span>
+        </div>
+    </div>
     <form method="post" class="post-form" action="{% url 'common:login' %}">
         {% csrf_token %}
+<!--        hidden 속성 : 사용자에게 보이지않는 숨겨진 입력필드 정의. input 태그가 form 태그 안에 있어야 질문등록하기 페이지로 넘어간다-->
+        <input type="hidden" name="next" value="{{ next }}">
         {% include "form_errors.html" %}
         <div class="form-group">
             <label for="username">사용자ID</label>

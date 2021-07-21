@@ -10,7 +10,7 @@ from django.utils import timezone
 from app1.forms import QuestionForm
 # 21.07.19. 페이징 처리 관련 모듈 import
 from django.core.paginator import Paginator
-
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -54,13 +54,16 @@ def answer_create(request, question_id):
     return redirect('app1:detail', question_id=question.id)
 
 # 질문 등록 함수 21.07.13
+# @login_required 를 추가해서 만약 질문등록하기 페이지 이동시 로그인이 안되어 있다면
+# 로그인 페이지로 먼저 이동 시킨다.
+@login_required(login_url='common:login')
 def question_create(request):
     # 수정내용 : GET, POST(주소에 데이터가 포함/느리다) 방식에 대한 처리
     # question_form 으로 들어올때
     # 질문을 등록할때
     # post 방식인지 get 방식인지 확인
     # 이유 : 단순히 질문등록 페이지를 오픈한 것인지
-    # 아니면 질문등록 페이지에 데이터를 입력해서 저장한것인지를 구분
+    # 아니면 질문등록 페이지에 데이터를 입력해서 저장 한 것인지를 구분
     if request.method == "POST":
         # forms.py 에 설정한 QuestionForm 클래스를 호출
         # request.POST : 사용자가 입력한 데이터를 받아온다.
@@ -72,8 +75,10 @@ def question_create(request):
             # 아직 DB 로 저장하지는 않았다
             question = form.save(commit=False)
             # create_date 컬럼을 따로 입력받지않은 이유?
-            # 현재시간으로 입력받기 위해 view 에서 처리
+            # 현재시간으로 입력받기 위해
+            # view 에서 처리
             question.create_date = timezone.now()
+            question.author = request.user
             # .save 없으면 저장 안되서 에러 발생
             question.save()
             return redirect('app1:index')
@@ -81,9 +86,16 @@ def question_create(request):
     else:
         form = QuestionForm()
         context = {'form': form}
-    return render(request, 'app1/question_form.html', {'form': form})
+    return render(request, 'app1/question_form.html', context)
 
-# 0714 수정 (기존내용 백업)
+# 21.07.21. King question_modify 관련 추가
+def question_modify(request, question_id):
+    form = QuestionForm()
+    return render(request, 'app1/question_form.html', {'form:form'})
+
+
+
+# 21.07.14. 수정 (기존내용 백업)
 # def question_create(request):
 #     form = QuestionForm()
 #     return render(request, 'app1/question_form.html', {'form': form})

@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# base_DIR 의 기본 경로는 해당 프로젝트의 ROOT 경로
+# BASE_DIR 의 기본 경로는 해당 프로젝트의 ROOT 경로
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # django 의 각종 쿠키 파일관리등 보안을 담당하는 key
-# 시크릿키 오출시 해당 디장고 프로젝트의 보안기능 상실 위험성 증가
+# 시크릿키 노출시 해당 디장고 프로젝트의 보안기능 상실 위험성 증가
 SECRET_KEY = 'a_d9_o&v*!yq*hc*ah84!-=v2s_iydf%0u59b=6mmpe7$9c(ri'
 
 # SECURITY WARNING: don't run with debug turned on in production!
